@@ -1,6 +1,7 @@
 pipeline {
     agent any
     environment {
+        DOCKER_HUB_CREDENTIALS=credentials("dockerhub")
         DOCKER_HUB_REPO = "gonzalesl/pipeline-project"
         CONTAINER_NAME = "flask-container"
         STUB_VALUE = "200"
@@ -12,6 +13,11 @@ pipeline {
                 echo "STUB_VALUE = ${STUB_VALUE}"
                 sh "sed -i 's/<STUB_VALUE>/$STUB_VALUE/g' config.py"
                 sh 'cat config.py'
+            }
+        }
+        stage('Login') {
+            steps {
+                sh "echo $DOCKER_HUB_CREDENTIALS_PSW |  docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin"
             }
         }
         stage('Build') {
