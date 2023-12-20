@@ -21,7 +21,6 @@ pipeline {
                 sh 'docker image tag $DOCKER_HUB_REPO:latest $DOCKER_HUB_REPO:$BUILD_NUMBER'
 
                 //  Pushing Image to Repository
-                sh 'docker login'
                 sh 'docker push $DOCKER_HUB_REPO:$BUILD_NUMBER'
                 sh 'docker push $DOCKER_HUB_REPO:latest'
                 
